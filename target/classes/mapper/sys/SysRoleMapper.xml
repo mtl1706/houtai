@@ -28,7 +28,9 @@
           select count(*) from sys_roles
           <include refid="query"/>
     </select>
-    
+    <delete id="deleteObject" parameterType="int">
+        delete from sys_roles where id=#{id}
+    </delete>
 </mapper>
 
 
