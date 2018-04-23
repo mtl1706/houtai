@@ -64,7 +64,38 @@
                .on("click",".btn-delete",doDeleteObject);
    })
    function doDeleteObject() {
-       
+       //1.获取用户选中的id
+       var ids = getCheckedIds();
+       //2.对选中的值进行判定
+       if(ids.length!=1){
+           alert("请选择一个");
+           return;
+       }
+       //3.异步提交数据，执行删除操作
+       var url = "role/doDeleteObject.do";
+       var params={id:ids[0]};
+       $.post(url,params,function (result) {
+           if(result.state==1){
+               alert(result.message);
+               doGetObjects();
+           }else{
+               alert(result.message);
+           }
+       });
+   }
+   //获取选中的checkbox的值
+   function getCheckedIds() {
+       //1.获取tbody所选复选框对象
+       //2.迭代所有checkbox对象，并检测哪些对象是选中的
+       //3.讲选中对象添加到数组中
+       var array =[];
+       $("#tbodyId input[type='checkbox']" )
+               .each(function () {
+                   if($(this).prop("checked")){
+                       array.push($(this).val())
+                   }
+               })
+       return array;
    }
    function doChangeCheckBoxState() {
        var flag=true;
