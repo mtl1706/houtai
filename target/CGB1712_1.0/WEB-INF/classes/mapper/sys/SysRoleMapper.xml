@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jt.sys.dao.SysRoleDao">
+
+    <sql id="query">
+        <where>
+            <if test="name!=null and name!=''">
+                name like concat("%",#{name},"%")
+            </if>
+        </where>
+    </sql>
+
+    <!-- 获取当前页数据 -->
+    <select id="findPageObjects"
+            resultType="sysRole">
+         select * 
+         from sys_roles
+         <include refid="query"/>
+         limit #{startIndex},#{pageSize}
+    </select>
+    
+    
+    <!-- 统计总记录数 resultMap,resultType-->
+    <select id="getRowCount"
+            resultType="int">
+          select count(*) from sys_roles
+          <include refid="query"/>
+    </select>
+    
+</mapper>
+
+
+
+
