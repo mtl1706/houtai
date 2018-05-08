@@ -22,10 +22,11 @@
     }
     function doJumpToPage(){
         console.log("==doJumpToPage==");
+        //点击上一页下一页等按钮时，清楚thead上的状态
+        $("#checkAll").prop("checked",false);
         //debugger:(断点调试:控制台打开以后有效)
         //1.判定你点击的是哪个元素
         //1.1 获取元素上对应class属性的值
-        $("#checkAll").prop("checked",false);
         var cls=$(this).prop("class");
         //1.2基于class属性的值进行判定，并执行相关操作
         var pageCurrent=$("#pageId").data("pageCurrent");

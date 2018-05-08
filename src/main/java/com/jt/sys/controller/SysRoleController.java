@@ -19,6 +19,10 @@ public class SysRoleController {
 		 return "sys/role_list";
 		 //WEB-INF/pages/sys/role_list.html
 	 }
+	 @RequestMapping("editUI")
+	 public String editUI(){
+		return "sys/role_edit";
+	 }
 
 	 @RequestMapping("doFindPageObjects")
 	 @ResponseBody

@@ -53,14 +53,70 @@
            doGetObjects();
        })
        //在btn-search按钮上注册点击事件，事件触发后执行doQueryObjects函数
-       $(".input-group-btn").on("click",".btn-search",doQueryObjects);
+       //$(".input-group-btn").on("click",".btn-search",doQueryObjects);
        //根据thead中全选checkbox的状态设置当前页面tbody中checkbox的装态
        $("#theadId").on("change","#checkAll",function () {
            doCheckAll($(this).prop("checked"));
        })
        //基于tbody中checkbox状态，设置thead中全选checkbox的装太
        $("#tbodyId").on("change",".chkCls",doChangeCheckBoxState);
+       $(".input-group-btn")
+               .on("click",".btn-delete",doDeleteObject)
+               .on("click",".btn-add",doLoadEditUI)
+               .on("click",".btn-search",doQueryObjects)
    })
+   //异步加载编辑页面，添加和修改共用一个页面
+   function doLoadEditUI(){
+       debugger
+       var title;
+       if($(this).hasClass("btn-add")){ //检查当前的元素是否含有某个特定的类，如果有，则返回true。
+          title="添加角色";
+       }else {
+           title="修改角色";
+           //获取当前行数据
+
+       }
+       var url = "role/editUI";
+       $(".container-fluid").load(url,function() {
+           //设置页面title
+           $(".box-title").html(title);
+       });
+   }
+
+   function doDeleteObject() {
+       //1.获取用户选中的id
+       var ids = getCheckedIds();
+       //2.对选中的值进行判定
+       if(ids.length!=1){
+           alert("请选择一个");
+           return;
+       }
+       //3.异步提交数据，执行删除操作
+       var url = "role/doDeleteObject";
+       var params={id:ids[0]};
+       $.post(url,params,function (result) {
+           if(result.state==1){
+               alert(result.message);
+               doGetObjects();
+           }else{
+               alert(result.message);
+           }
+       });
+   }
+   //获取选中的checkbox的值
+   function getCheckedIds() {
+       //1.获取tbody所选复选框对象
+       //2.迭代所有checkbox对象，并检测哪些对象是选中的
+       //3.讲选中对象添加到数组中
+       var array =[];
+       $("#tbodyId input[type='checkbox']" )
+               .each(function () {
+                   if($(this).prop("checked")){
+                       array.push($(this).val())
+                   }
+               })
+       return array;
+   }
    function doChangeCheckBoxState() {
        var flag=true;
        $("#tbodyId input[type='checkbox']").each(function () {
@@ -90,23 +146,31 @@
                 setTableBodyRows(result.data.records);
                 //显示分页信息
                 setPagination(result.data);
+            }else{
+                alert(result.message);
             }
         });
     }
     function setTableBodyRows(data) {
+        //1.获取tbody对象，并清空数据
         var tBody = $("#tbodyId");
         tBody.empty();
+        //2.迭代数据
         for(var i in data){
+            //2.1构建tr对象
             var tr = $("<tr></tr>");
-            //绑定数据（为后续的修改等服务）
+            //2.2绑定数据（为后续的修改等服务）
             tr.data("id",data[i].id);
-            var tds = $("<td><input type='checkbox'class='chkCls'/></td>"+
+            //2.3构建td元素对象
+            var tds = $("<td><input type='checkbox'class='chkCls' name='checkItem' value='"+data[i].id+"'></td>"+
                         "<td>"+data[i].name+"</td>"+
                         "<td>"+data[i].createdTime+"</td>"+
                         "<td>"+data[i].modifiedTime+"</td>"+
-                        "<td><button class='btn btn-default'>updata</button></td>"
+                        "<td><button class='btn btn-default'>修改</button></td>"
             );
+            //2.4讲td追加到tr中
             tr.append(tds);
+            //2.5将tr追加到tbody中
             tBody.append(tr);
         }
     }
