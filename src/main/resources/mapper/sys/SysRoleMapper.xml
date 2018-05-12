@@ -31,6 +31,28 @@
     <delete id="deleteObject" parameterType="int">
         delete from sys_roles where id=#{id}
     </delete>
+    <!--添加用户-->
+    <insert id="insertObject" parameterType="sysRole">
+       insert into sys_roles(name,note,createdTime,modifiedTime,createdUser,modifiedUser)
+       values(#{name},#{note},now(),now(),#{createdUser},#{modifiedUser})
+   </insert>
+    <!--修改角色-->
+   <update id="updateObject" parameterType="sysRole">
+       update sys_roles
+       <set>
+       <if test="name!=null and name!=''">
+           name=#{name},
+       </if>
+       <if test="note!=null and note!=''">
+           note=#{note},
+       </if>
+       <if test="modifiedUser!null and modifiedUser!=''">
+           modifiedUser = #{modifiedUser},
+       </if>
+           modifiedTime = now()
+       </set>
+       where id = #{id}
+   </update>
 </mapper>
 
 

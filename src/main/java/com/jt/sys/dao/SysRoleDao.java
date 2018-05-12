@@ -16,6 +16,8 @@ public interface SysRoleDao {
 	 public int getRowCount(@Param("name")String name);
 	 //删除对象的方法
 	 int deleteObject(Integer id);
-	 
+	 //添加用户
+	 int insertObject(SysRole entity);
+	 int updateObject(SysRole entity);
 	 
 }

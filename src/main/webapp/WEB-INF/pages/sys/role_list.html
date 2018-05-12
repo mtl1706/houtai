@@ -59,22 +59,25 @@
            doCheckAll($(this).prop("checked"));
        })
        //基于tbody中checkbox状态，设置thead中全选checkbox的装太
-       $("#tbodyId").on("change",".chkCls",doChangeCheckBoxState);
+       $("#tbodyId").on("change",".chkCls",doChangeCheckBoxState)
+                    .on("click",".btn-update",doLoadEditUI);
        $(".input-group-btn")
                .on("click",".btn-delete",doDeleteObject)
                .on("click",".btn-add",doLoadEditUI)
-               .on("click",".btn-search",doQueryObjects)
+               .on("click",".btn-search",doQueryObjects);
    })
    //异步加载编辑页面，添加和修改共用一个页面
    function doLoadEditUI(){
-       debugger
+       //debugger
        var title;
-       if($(this).hasClass("btn-add")){ //检查当前的元素是否含有某个特定的类，如果有，则返回true。
+       //hasClass检查当前的元素是否含有某个特定的类，如果有，则返回true。
+       if($(this).hasClass("btn-add")){
           title="添加角色";
        }else {
            title="修改角色";
            //获取当前行数据
-
+           var rowDate = $(this).parents("tr").data("rowDate");
+           $(".container-fluid").data("rowDate",rowDate);//再次绑定到外部div上，
        }
        var url = "role/editUI";
        $(".container-fluid").load(url,function() {
@@ -161,12 +164,15 @@
             var tr = $("<tr></tr>");
             //2.2绑定数据（为后续的修改等服务）
             tr.data("id",data[i].id);
+            //绑定一行数据，用户修改时回显使用
+            tr.data("rowData",data[i]);
             //2.3构建td元素对象
             var tds = $("<td><input type='checkbox'class='chkCls' name='checkItem' value='"+data[i].id+"'></td>"+
                         "<td>"+data[i].name+"</td>"+
                         "<td>"+data[i].createdTime+"</td>"+
                         "<td>"+data[i].modifiedTime+"</td>"+
-                        "<td><button class='btn btn-default'>修改</button></td>"
+                        "<td><button type = 'button'class='btn btn-default btn-update'>修改</button></td>"
+                    //这里添加type=button 表明此button仅是一个按钮，不然有可能提交表单，全局刷新
             );
             //2.4讲td追加到tr中
             tr.append(tds);

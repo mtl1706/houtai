@@ -53,4 +53,26 @@ public class SysRoleServiceImpl implements SysRoleService {
 		return row;
 	}
 
+	@Override
+	public int saveObject(SysRole entity) {
+		if(entity==null)
+			throw new ServiceException("保存对象不能为空");
+		int rows = sysRoleDao.insertObject(entity);
+		return rows;
+	}
+
+	@Override
+	public int updateObject(SysRole entity) {
+		//1.合法性验证
+		//2.进行修改
+		//3.验证结果
+		//4.返回结果
+		if(entity==null)
+			throw new ServiceException("保存对象不能为空");
+		int rows = sysRoleDao.updateObject(entity);
+		if(rows==0)
+			throw new ServiceException("数据可能已经不存在");
+		return rows;
+	}
+
 }

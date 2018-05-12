@@ -10,7 +10,8 @@
     </typeAliases>
     
     <mappers>
-       <mapper resource="mapper/sys/SysRoleMapper.xml"/>
+        <mapper resource="mapper/sys/SysRoleMapper.xml"/>
+        <mapper resource="mapper/sys/SysUserMapper.xml"/>
     </mappers>
   
  </configuration>

@@ -39,5 +39,20 @@ public class SysRoleController {
 		sysRoleService.deleteObject(id);
 		return new JsonResult("delete ok");
 	}
+	//添加角色
+    @RequestMapping("doSaveObject")
+	@ResponseBody
+	public JsonResult doSaveObject(SysRole entity){
+		sysRoleService.saveObject(entity);
+		return new JsonResult("save ok");
+	}
+	//修改角色
+	@RequestMapping("doUpdateObject")
+	@ResponseBody
+	public JsonResult doUpdateObject(SysRole entity){
+		sysRoleService.updateObject(entity);
+		return new JsonResult("update ok");
+	}
+
 
 }

@@ -9,6 +9,8 @@ public interface SysRoleService {
 	PageObject<SysRole> findPageObjects(Integer pageCurrent,String name);
 	//删除
 	int deleteObject(Integer id);
-	
-	
+	//保存角色信息
+	int saveObject(SysRole entity);
+	//修改角色
+	int updateObject(SysRole entity);
 }
