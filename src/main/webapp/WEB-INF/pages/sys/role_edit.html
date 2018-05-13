@@ -38,6 +38,7 @@
 </div>
 <!--<script type="text/javascript" src="bower_components/ztree/jquery.ztree.all.min.js"></script>-->
 <script type="text/javascript">
+
     //页面加载完执行
     $(document).ready(function (){
         $(".box-footer").on("click",".btn-cancel",doCancel)
@@ -45,7 +46,7 @@
         var rowDate = $(".container-fluid").data("rowDate");
         //如果外层容器有数据则初始化页面数据
         if(rowDate) doInitFormData(rowDate);
-    })
+    });
     function doInitFormData(rowDate) {
         $("#nameId").val(data.name);
         $("#noteId").val(data.note);

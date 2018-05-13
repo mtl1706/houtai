@@ -58,9 +58,9 @@
        $("#theadId").on("change","#checkAll",function () {
            doCheckAll($(this).prop("checked"));
        })
-       //基于tbody中checkbox状态，设置thead中全选checkbox的装太
+       //基于tbody中checkbox状态，设置thead中全选checkbox的状态
        $("#tbodyId").on("change",".chkCls",doChangeCheckBoxState)
-                    .on("click",".btn-update",doLoadEditUI());
+                    .on("click",".btn-update",doLoadEditUI);
        $(".input-group-btn")
                .on("click",".btn-delete",doDeleteObject)
                .on("click",".btn-add",doLoadEditUI)
@@ -73,7 +73,7 @@
        //hasClass检查当前的元素是否含有某个特定的类，如果有，则返回true。
        if($(this).hasClass("btn-add")){
           title="添加角色";
-       }else {
+       }else{
            title="修改角色";
            //获取当前行数据
            var rowDate = $(this).parents("tr").data("rowDate");
@@ -165,7 +165,7 @@
             //2.2绑定数据（为后续的修改等服务）
             tr.data("id",data[i].id);
             //绑定一行数据，用户修改时回显使用
-            tr.data("rowData",data[i]);
+            tr.data("rowDate",data[i]);
             //2.3构建td元素对象
             var tds = $("<td><input type='checkbox'class='chkCls' name='checkItem' value='"+data[i].id+"'></td>"+
                         "<td>"+data[i].name+"</td>"+
@@ -178,7 +178,9 @@
             tr.append(tds);
             //2.5将tr追加到tbody中
             tBody.append(tr);
+
         }
+
     }
 </script>
 

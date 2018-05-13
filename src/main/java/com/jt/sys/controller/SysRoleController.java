@@ -50,6 +50,7 @@ public class SysRoleController {
 	@RequestMapping("doUpdateObject")
 	@ResponseBody
 	public JsonResult doUpdateObject(SysRole entity){
+		System.out.println("修改角色信息："+entity);
 		sysRoleService.updateObject(entity);
 		return new JsonResult("update ok");
 	}

@@ -14,7 +14,6 @@ import java.util.List;
 public class SysRoleServiceImpl implements SysRoleService {
 	@Autowired
 	private SysRoleDao sysRoleDao;
-
 	@Override
 	public PageObject<SysRole> findPageObjects(Integer pageCurrent, String name) {
 		//1.参数合法性验证

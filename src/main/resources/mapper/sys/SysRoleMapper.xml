@@ -46,7 +46,7 @@
        <if test="note!=null and note!=''">
            note=#{note},
        </if>
-       <if test="modifiedUser!null and modifiedUser!=''">
+       <if test="modifiedUser!=null and modifiedUser!=''">
            modifiedUser = #{modifiedUser},
        </if>
            modifiedTime = now()
