@@ -45,7 +45,22 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(function () {
+        $("#pageId").load("pageUI",function () {
+            doGetObjects();
+        });
+    })
+    function doGetObjects() {
+        
+    }
+
+
+
+
+
+
+
+   /* $(document).ready(function(){
         $("#pageId").load("pageUI.do",function(){
             doGetObjects();
         });
@@ -71,14 +86,14 @@
         }
     }
     function getCheckedId(){
-        /* var id;
+        /!* var id;
          $("tbody input[name='radioId']")
          .each(function (){
          if($(this).prop("checked")){
          id=$(this).val();
          }
          });
-         return id; */
+         return id; *!/
         return $("tbody input[name='radioId']:checked").val();
     }
 
@@ -162,7 +177,7 @@
             tBody.append(tr);
         }
 
-    }
+    }*/
 </script>
 
 

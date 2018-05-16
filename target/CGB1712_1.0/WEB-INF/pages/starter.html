@@ -394,8 +394,15 @@ desired effect
 <script type="text/javascript">
     $(function(){
         $("#load-role-id").click(function(){
-            $(".container-fluid").load("role/listUI");
-        })
+            $(".container-fluid").load("role/listUI",function(){
+                $(".container-fluid").removeData();
+            });
+        });
+        $("#load-user-id").click(function(){
+            $(".container-fluid").load("user/listUI",function () {
+                $(".container-fluid").removeData();
+            });
+        });
     })
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

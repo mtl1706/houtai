@@ -393,10 +393,17 @@ desired effect
 <script src="dist/js/adminlte.min.js"></script>
 <script type="text/javascript">
     $(function(){
-        $("#load-role-id").click(function(){
-            $(".container-fluid").load("role/listUI");
-        })
-    })
+         doLoadUI("#load-role-id","role/listUI");
+         doLoadUI("#load-user-id","user/listUI");
+    });
+    //代码重复时，提取成方法，提取的方式是，将不一样的地方作为提取成方法的参数
+    function doLoadUI(id,url) {
+        $(id).click(function(){
+            $(".container-fluid").load(url,function () {
+                $(".container-fluid").removeData();
+            });
+        });
+    }
 </script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

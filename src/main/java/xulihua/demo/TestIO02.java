@@ -40,8 +40,9 @@ class Customer implements Serializable{
                 ", age=" + age +
                 '}';
     }
-
-    //对象序列化时，底层会自动调用此方法
+    //手动添加以下两个方法，方法名不可改，进行序列化反序列化时相关属性的操作：如：加密
+    //对象序列化时，底层会自动调用此方法,如果此类中不写这个方法，
+    //底层默认直接调用os.defaultWriteObject()方法
     private void writeObject(ObjectOutputStream os) throws IOException {
         //加密（加密算法：可以参考Base64）
         id+=1;

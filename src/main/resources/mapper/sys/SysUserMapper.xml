@@ -3,8 +3,23 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jt.sys.dao.SysUserDao">
-
-
+    <sql id="pageQueryWhere">
+        <!--按照指定条件动态拼接SQL-->
+        <if test="name!=null and name!=''">
+            <where>
+                username like concat("%",#{name},"%")
+            </where>
+        </if>
+    </sql>
+  <select id="findPageObjects" resultType="sysUser">
+      select * from sys_users
+      <include refid="pageQueryWhere"/>
+      limit #{startIndex},#{pageSize}
+  </select>
+  <select id="getRowCount" resultType="int">
+      select count(*) from sys_users
+      <include refid="pageQueryWhere"/>
+  </select>
 </mapper>
 
 
