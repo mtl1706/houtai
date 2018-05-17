@@ -39,6 +39,8 @@ public class SysUserController {
     @ResponseBody
     public JsonResult doFindPageObjects(String name ,Integer pageCurrent){
         PageObject pageObject= sysUserService.findPageObjects(name,pageCurrent);
-        return new JsonResult(pageObject);
+        JsonResult json = new JsonResult(pageObject);
+        System.out.println(json);
+        return json;
     }
 }

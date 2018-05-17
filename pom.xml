@@ -18,6 +18,7 @@
     <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
 
+
   <dependencies>
     <!--添加spring MVC依赖 -->
     <dependency>
@@ -105,6 +106,7 @@
       <artifactId>junit</artifactId>
       <version>4.12</version>
     </dependency>
+
     <dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-jpa</artifactId>

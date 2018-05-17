@@ -17,7 +17,7 @@
       limit #{startIndex},#{pageSize}
   </select>
   <select id="getRowCount" resultType="int">
-      select count(*) from sys_users
+      select count(1) from sys_users
       <include refid="pageQueryWhere"/>
   </select>
 </mapper>

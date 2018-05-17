@@ -48,10 +48,9 @@ public class SysRoleControllerTest {
     @Test
     public void updateObjectTest() throws Exception {
         String responseString = mockMvc.perform(
-                get("/role/doUpdateObject")
+                get("/user/doFindPageObjects")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("id","44")
-                .param("name","M")
+                .param("pageCurrent","1")
         ).andExpect(status().isOk())
                 .andDo(print())
                 .andReturn().getResponse().getContentAsString();

@@ -45,10 +45,10 @@ public class SysUserServiceImpl implements SysUserService {
           List<SysUser> listUsers= sysUserDao.findPageObjects(name,startIndex,pageSize);
           int rowCount = sysUserDao.getRowCount(name);
           PageObject<SysUser> pageObject = new PageObject<SysUser>();
-          pageObject.setPageCount(rowCount);
           pageObject.setPageCurrent(pageCurrent);
           pageObject.setPageSize(pageSize);
           pageObject.setRecords(listUsers);
+          pageObject.setRowCount(rowCount);
           return pageObject;
     }
 }
