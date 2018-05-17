@@ -45,7 +45,71 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function(){
+    $(function () {
+        $("#pageId").load("pageUI",function () {
+            doGetObjects();
+        });
+        $(".input-group-btn").on("click",".btn-search",doQueryObjects);
+    })
+    function doQueryObjects() {
+        $("#pageId").data("pageCurrent",1);
+        doGetObjects();
+    }
+    function doGetObjects() {
+        //1.定义url
+        var url = "user/doFindPageObjects";
+        //2.定义参数
+        var pageCurrent =$("#pageId").data("pageCurrent");
+        if(!pageCurrent)pageCurrent=1;
+        var params = {"pageCurrent":pageCurrent};
+        var username = $("#searchNameId").val();
+        params.name=username;
+       // params['name']=username;这种写法适合变量名有特殊字符
+        //3.发送异步请求
+        $.getJSON(url,params,function (result) {
+            if(result.state==1){
+               //1.显示当前页面的用户信息
+                setTableBodyRows(result.data.records);
+                //2.设置分页数据显示的数据
+                setPagination(result.data);
+            }else {
+                alert(result.message);
+            }
+        });
+    }
+    function setTableBodyRows(records) {
+        //1.获取tbody对象，并清空
+        var tBody = $("#tbodyId");
+        tBody.empty();
+        //2.遍历数据集，并将数据填充到tbody中
+        for(var i in records){//循环一次去一行
+            //1.构建tr对象
+            var tr = $("<tr></tr>");
+            //2.构建td对象（拼接字符串）
+            var tds = $("<td><input type='radio' name='checkItem' value='"+records[i].id+"'></td>" +
+                       "<td>"+records[i].username+"</td>" +
+                       "<td>"+records[i].email+"</td>" +
+                       "<td>"+records[i].mobile+"</td>" +
+                       "<td>"+records[i].valid+"</td>" +
+                       "<td>"+records[i].createdTime+"</td>" +
+                       "<td>"+records[i].modifiedTime+"</td>" +
+                       "<td><button type='button' class='btn btn-default btn-valid'>禁用</button></td>"
+                       );
+            //3.讲td追加到tr上
+            tr.append(tds);
+            //4.讲tr追加到tbody上
+            tBody.append(tr);
+
+        }
+    }
+
+
+
+
+
+
+
+   /* $(document).ready(function(){
         $("#pageId").load("pageUI.do",function(){
             doGetObjects();
         });
@@ -71,14 +135,14 @@
         }
     }
     function getCheckedId(){
-        /* var id;
+        /!* var id;
          $("tbody input[name='radioId']")
          .each(function (){
          if($(this).prop("checked")){
          id=$(this).val();
          }
          });
-         return id; */
+         return id; *!/
         return $("tbody input[name='radioId']:checked").val();
     }
 
@@ -162,7 +226,7 @@
             tBody.append(tr);
         }
 
-    }
+    }*/
 </script>
 
 
