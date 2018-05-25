@@ -49,8 +49,54 @@
         $("#pageId").load("pageUI",function () {
             doGetObjects();
         });
-        $(".input-group-btn").on("click",".btn-search",doQueryObjects);
+        $(".input-group-btn")
+                .on("click",".btn-search",doQueryObjects)
+                .on("click",".btn-add",doLoadEditUI);
+        $("#tbodyId").on("click",".btn-valid",doValidById);
     })
+    function doLoadEditUI() {
+       //1.定义标题
+        var title;
+        if($(this).hasClass("btn-add")){
+            title="添加用户";
+        }else {
+            title="修改用户";
+        }
+        //2.异步加载页面
+        var url = "user/editUI";
+        $(".container-fluid").load(url,function () {
+            $(".box-title").html(title);
+        });
+    }
+    function doValidById() {
+         //1.定义url
+        var url = "user/doValidById";
+        //2.定义参数
+        var user = $(this).parents("tr").data("sysUser");
+        var params = {"id":user.id,"valid":user.valid?0:1};
+        var btn = $(this);
+        $.post(url,params,function (result) {
+            if(result.state==1){
+                alert(result.message);
+                //此处的doEditRow也可以不写（但这样做可以减少查询），执行doGetObjects(),结果一样（但执行了查询）
+                doEditRow(btn,user.valid?0:1);
+            }else {
+                alert(result.message);
+            }
+        })
+
+    }
+    function doEditRow(btn,valid) {
+        //1.修改按钮上的内容
+        btn.html(valid?"禁用":"启用");
+        //2.修改td中的内容
+        var tr = btn.parents("tr");
+        tr.find("td:eq(4)").html(valid?"启用":"禁用");
+        //3.重新修改数据，绑定到tr上
+        var sysUser = tr.data("sysUser");
+        sysUser.valid = valid;
+        tr.data("sysUser",sysUser);
+    }
     function doQueryObjects() {
         $("#pageId").data("pageCurrent",1);
         doGetObjects();
@@ -85,15 +131,17 @@
         for(var i in records){//循环一次去一行
             //1.构建tr对象
             var tr = $("<tr></tr>");
+            //将每条数据绑定到tr上
+            tr.data("sysUser",records[i]);
             //2.构建td对象（拼接字符串）
             var tds = $("<td><input type='radio' name='checkItem' value='"+records[i].id+"'></td>" +
                        "<td>"+records[i].username+"</td>" +
                        "<td>"+records[i].email+"</td>" +
                        "<td>"+records[i].mobile+"</td>" +
-                       "<td>"+records[i].valid+"</td>" +
+                       "<td>"+((records[i].valid)?'启用':'禁用')+"</td>" +
                        "<td>"+records[i].createdTime+"</td>" +
                        "<td>"+records[i].modifiedTime+"</td>" +
-                       "<td><button type='button' class='btn btn-default btn-valid'>禁用</button></td>"
+                       "<td><button type='button' class='btn btn-default btn-valid'>"+((records[i].valid)?'禁用':'启用')+"</button></td>"
                        );
             //3.讲td追加到tr上
             tr.append(tds);

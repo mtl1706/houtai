@@ -3,7 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jt.sys.dao.SysRoleDao">
-
+    <!--查询角色id和名字，在添加用户和修改页面时使用-->
+    <select id="findObjects" resultType="checkBox">
+        select id,name from sys_roles
+    </select>
     <sql id="query">
         <where>
             <if test="name!=null and name!=''">

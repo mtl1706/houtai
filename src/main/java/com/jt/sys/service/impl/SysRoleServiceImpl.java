@@ -1,6 +1,7 @@
 package com.jt.sys.service.impl;
 
 import com.jt.common.exception.ServiceException;
+import com.jt.common.vo.CheckBox;
 import com.jt.common.vo.PageObject;
 import com.jt.sys.dao.SysRoleDao;
 import com.jt.sys.entity.SysRole;
@@ -14,6 +15,12 @@ import java.util.List;
 public class SysRoleServiceImpl implements SysRoleService {
 	@Autowired
 	private SysRoleDao sysRoleDao;
+
+	@Override//获取角色id和名字
+	public List<CheckBox> findObjects() {
+		return sysRoleDao.findObjects();
+	}
+
 	@Override
 	public PageObject<SysRole> findPageObjects(Integer pageCurrent, String name) {
 		//1.参数合法性验证

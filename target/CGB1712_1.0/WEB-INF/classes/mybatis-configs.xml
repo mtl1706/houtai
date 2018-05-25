@@ -4,14 +4,17 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
  <!-- mybatis 核心配置文件(配置mybatis基础信息:例如连接，映射文件,...) -->
  <configuration>
- 
+    <!--配置别名包-->
     <typeAliases>
-       <package name="com.jt.sys.entity"/>
+        <package name="com.jt.sys.entity"/>
+        <package name="com.jt.common.vo"/>
+
     </typeAliases>
     
     <mappers>
         <mapper resource="mapper/sys/SysRoleMapper.xml"/>
         <mapper resource="mapper/sys/SysUserMapper.xml"/>
+        <mapper resource="mapper/sys/SysUserRoleMapper.xml"/>
     </mappers>
   
  </configuration>

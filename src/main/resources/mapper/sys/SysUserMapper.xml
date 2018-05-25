@@ -3,6 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jt.sys.dao.SysUserDao">
+    <!--useGeneratedKeys="true" keyProperty="id"
+    这两个属性会将写入到数据库的主键值写入到id这个字段上-->
+    <insert id="insertObjects" parameterType="sysUser"
+                               useGeneratedKeys="true"
+                               keyProperty="id">
+        insert into sys_users(username,password,email,mobile,
+        salt,valid,createdTime,modifiedTime,createdUser,modifiedUser)
+        values(#{username},#{password},#{email},#{mobile},#{salt},
+        #{valid},now(),now(),#{createdUser},#{modifiedUser})
+    </insert>
     <sql id="pageQueryWhere">
         <!--按照指定条件动态拼接SQL-->
         <if test="name!=null and name!=''">
@@ -20,6 +30,14 @@
       select count(1) from sys_users
       <include refid="pageQueryWhere"/>
   </select>
+    <update id="doValidById">
+        update sys_users
+        set
+        valid = #{valid},
+        modifiedUser = #{modifiedUser},
+        modifiedTime = now()
+        where id= #{id}
+    </update>
 </mapper>
 
 

@@ -1,5 +1,8 @@
 package com.jt.sys.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.jt.common.util.DateConvertUtil;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -75,7 +78,7 @@ public class SysUser implements Serializable {
     public void setValid(Integer valid) {
         this.valid = valid;
     }
-
+    @JsonSerialize(using= DateConvertUtil.class)
     public Date getCreatedTime() {
         return createdTime;
     }
@@ -83,7 +86,7 @@ public class SysUser implements Serializable {
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
-
+    @JsonSerialize(using= DateConvertUtil.class)
     public Date getModifiedTime() {
         return modifiedTime;
     }
