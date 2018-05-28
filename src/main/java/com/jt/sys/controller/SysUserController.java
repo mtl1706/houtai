@@ -12,6 +12,7 @@ package com.jt.sys.controller;
 
 import com.jt.common.vo.JsonResult;
 import com.jt.common.vo.PageObject;
+import com.jt.sys.entity.SysUser;
 import com.jt.sys.service.SysRoleService;
 import com.jt.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,12 @@ public class SysUserController {
     public String loadUserListPage(){
         return "sys/user_list";
     }
-
+    @RequestMapping("doSaveObject")
+    @ResponseBody
+    public JsonResult doSaveObject(SysUser entity,String roleIds){
+        sysUserService.saveObject(entity,roleIds);
+        return new JsonResult("save ok");
+    }
     @RequestMapping("doFindPageObjects")
     @ResponseBody
     public JsonResult doFindPageObjects(String name ,Integer pageCurrent){

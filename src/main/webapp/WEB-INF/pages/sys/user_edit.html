@@ -41,8 +41,8 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-            <button type="button" class="btn btn-default btn-cancel">Cancel</button>
-            <button type="button" class="btn btn-info pull-right btn-save">Save</button>
+            <button type="button" class="btn btn-default btn-cancel">取消</button>
+            <button type="button" class="btn btn-info pull-right btn-save">保存</button>
         </div>
         <!-- /.box-footer -->
     </form>
@@ -54,7 +54,49 @@
    //这个页面的数据有用户数据和角色数据
     $(function () {
         doLoadSysRoles();
+        //注册事件cancel save
+        $(".box-footer").on("click",".btn-cancel",doCancel)
+                        .on("click",".btn-save",doSaveOrUpdate);
     })
+    function doCancel() {
+        //1.返回列表页面
+        $(".container-fluid").load("user/listUI");
+        //2.移除绑定的数据
+        $(".container-fluid").removeData();
+    }
+    function doSaveOrUpdate() {
+        //1.url
+        var url = "user/doSaveObject";
+        //2.params
+        var params = getEditFormData();//获取表单数据
+        //3.ajax请求  由于是个表单提交，用了post请求
+        $.post(url,params,function (result) {
+           if(result.state==1){
+               alert(result.message);
+               doCancel();
+           }else {
+               alert(result.message);
+           }
+        });
+    }
+    function getEditFormData() {
+        var params={
+            //这些参数传到后台时底层会通过反射封装成实体类
+            username:$("#usernameId").val(),
+            password:$("#passwordId").val(),
+            email:$("#emailId").val(),
+            mobile:$("#phoneId").val()
+        };
+        //获取用户角色信息
+        var rolesIds = new Array();
+        $("#rolesId input[type='checkbox']").each(function () {
+            if($(this).prop("checked")){
+                rolesIds.push($(this).val())
+            }
+        });
+        params.roleIds = rolesIds.toString();//1,2,3
+        return params;
+    }
     function doLoadSysRoles() {
         var url = "role/doFindObjects";
         $.getJSON(url,function (result) {
